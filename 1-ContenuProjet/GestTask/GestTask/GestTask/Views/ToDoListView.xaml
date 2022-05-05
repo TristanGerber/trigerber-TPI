@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:model="clr-namespace:GestTask.Models"
+             xmlns:local="clr-namespace:GestTask.ViewModels"
+             x:Class="GestTask.Views.ToDoListView"
+             Title="{Binding Title}"
+             x:Name="BrowseToDoListView">
+
+    <!--
+        Developper : Tristan Gerber
+        Place : ETML, N501
+        Project creation date : 05.05.2022
+        Last updated : 05.05.2022 */
+    -->
+
+    <RefreshView x:DataType="local:ToDoListViewModel" Command="{Binding LoadTasksCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+        <CollectionView x:Name="ArticlesListView"
+                ItemsSource="{Binding Tasks}"
+                SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame BorderColor="Black" Padding="1">
+                        <StackLayout x:DataType="model:TaskModel" BackgroundColor="AliceBlue" Padding="20,15,10,15">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="3*"/>
+                                    <ColumnDefinition Width="0"/>
+                                    <ColumnDefinition Width="0"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <StackLayout Grid.Column="0">
+                                    <Label Text="{Binding Name}"
+                                        LineBreakMode="NoWrap"
+                                        Style="{DynamicResource ListItemTextStyle}"
+                                        FontAttributes="Bold"
+                                        FontSize="20" />
+                                </StackLayout>
+                            </Grid>
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    NumberOfTapsRequired="1"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:TasksViewModel}}, Path=ArticleTapped}"
+                                    CommandParameter="{Binding .}">
+                                </TapGestureRecognizer>
+                            </StackLayout.GestureRecognizers>
+                        </StackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </RefreshView>
+</ContentPage>
