@@ -14,7 +14,7 @@ namespace GestTask.Views {
     
     
     [global::Xamarin.Forms.Xaml.XamlFilePathAttribute("Views\\NewTaskPopup.xaml")]
-    public partial class NewTaskPopup : global::Xamarin.Forms.ContentView {
+    public partial class NewTaskPopup : global::Rg.Plugins.Popup.Pages.PopupPage {
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Forms.Build.Tasks.XamlG", "2.0.0.0")]
         private void InitializeComponent() {

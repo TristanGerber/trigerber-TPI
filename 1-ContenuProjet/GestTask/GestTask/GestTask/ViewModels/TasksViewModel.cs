@@ -22,20 +22,22 @@ namespace GestTask.ViewModels
         private TaskModel _selectedTask;
         private IPopupNavigation _popup { get; set; }
         private TaskMenuPopup _modalPage;
+        private NewTaskPopup _newTaskPage;
         public ObservableCollection<TaskModel> Tasks { get; }
         public Command LoadTasksCommand { get; }
         public Command AddTaskCommand { get; }
-        public Command<TaskModel> TaskTapped { get; }
+        public Command<TaskModel> TaskTappedCommand { get; }
 
         public TasksViewModel()
         {
             Title = "Tâches";
             Tasks = new ObservableCollection<TaskModel>();
             LoadTasksCommand = new Command(async () => await ExecuteLoadTasksCommand());
-            TaskTapped = new Command<TaskModel>(OnTaskSelected);
+            TaskTappedCommand = new Command<TaskModel>(OnTaskSelected);
             AddTaskCommand = new Command(OnAddTask);
             _popup = PopupNavigation.Instance;
             _modalPage = new TaskMenuPopup();
+            _newTaskPage = new NewTaskPopup();
         }
 
         async Task ExecuteLoadTasksCommand()
@@ -45,7 +47,7 @@ namespace GestTask.ViewModels
             try
             {
                 Tasks.Clear();
-                IEnumerable<TaskModel> tasks = await DataStore.GetTasksAsync(true);
+                IEnumerable<TaskModel> tasks = await App.Db.GetTasksAsync(true);
                 foreach (TaskModel task in tasks)
                 {
                     Tasks.Add(task);
@@ -84,7 +86,8 @@ namespace GestTask.ViewModels
 
         private async void OnAddTask(object obj)
         {
-            // await Shell.Current.GoToAsync(nameof(NewItemPage));
+            await _popup.PushAsync(_newTaskPage, true);
+            //await Shell.Current.GoToAsync(nameof(NewTaskPopup));
         }
 
         async void OnTaskSelected(TaskModel task)

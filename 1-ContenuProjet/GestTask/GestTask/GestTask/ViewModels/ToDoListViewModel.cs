@@ -38,7 +38,7 @@ namespace GestTask.ViewModels
             try
             {
                 Tasks.Clear();
-                IEnumerable<TaskModel> tasks = await DataStore.GetTasksAsync(true);
+                IEnumerable<TaskModel> tasks = await App.Db.GetTasksAsync(true);
                 foreach (TaskModel task in tasks)
                 {
                     if (task.InToDoList)

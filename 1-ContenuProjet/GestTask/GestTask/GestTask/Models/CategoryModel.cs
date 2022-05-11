@@ -3,11 +3,14 @@
  * Project creation date : 05.05.2022
  * Last updated : 05.05.2022 */
 
+using SQLite;
+
 namespace GestTask.Models
 {
     public class CategoryModel
     {
-        public string Id { get; set; }
+        [PrimaryKey, AutoIncrement]
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Color { get; set; }
     }

@@ -15,7 +15,6 @@ namespace GestTask.ViewModels
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
-        public IDataStore<TaskModel> DataStore => DependencyService.Get<IDataStore<TaskModel>>();
 
         bool isBusy = false;
         public bool IsBusy
