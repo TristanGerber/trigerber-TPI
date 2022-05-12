@@ -14,6 +14,7 @@ using Rg.Plugins.Popup.Contracts;
 using Rg.Plugins.Popup.Services;
 using GestTask.Views;
 using Rg.Plugins.Popup.Events;
+using System.Linq;
 
 namespace GestTask.ViewModels
 {
@@ -36,7 +37,6 @@ namespace GestTask.ViewModels
             TaskTappedCommand = new Command<TaskModel>(OnTaskSelected);
             AddTaskCommand = new Command(OnAddTask);
             _popup = PopupNavigation.Instance;
-            _modalPage = new TaskMenuPopup();
             _newTaskPage = new NewTaskPopup();
         }
 
@@ -47,7 +47,8 @@ namespace GestTask.ViewModels
             try
             {
                 Tasks.Clear();
-                IEnumerable<TaskModel> tasks = await App.Db.GetTasksAsync(true);
+                List<TaskModel> tasks = await App.Db.GetTasksAsync(true);
+                tasks = new List<TaskModel>(tasks.OrderBy(i => i.PassingDate));
                 foreach (TaskModel task in tasks)
                 {
                     Tasks.Add(task);
@@ -87,13 +88,13 @@ namespace GestTask.ViewModels
         private async void OnAddTask(object obj)
         {
             await _popup.PushAsync(_newTaskPage, true);
-            //await Shell.Current.GoToAsync(nameof(NewTaskPopup));
         }
 
         async void OnTaskSelected(TaskModel task)
         {
             if (task == null)
                 return;
+            _modalPage = new TaskMenuPopup(task);
             await _popup.PushAsync(_modalPage, true);
         }
     }

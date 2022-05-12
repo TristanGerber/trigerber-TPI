@@ -13,6 +13,7 @@ namespace GestTask.Models
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
         public string Name { get; set; }
+        public string Description { get; set; }
         public bool Active { get; set; }
         public DateTime PassingDate { get; set; }
         public bool InToDoList { get; set; }

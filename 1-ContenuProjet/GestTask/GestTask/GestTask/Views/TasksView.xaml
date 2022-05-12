@@ -39,6 +39,12 @@
                                         Style="{DynamicResource ListItemTextStyle}"
                                         FontAttributes="Bold"
                                         FontSize="20" />
+                                    <Label Text="{Binding PassingDate}"
+                                        LineBreakMode="NoWrap"
+                                        Style="{DynamicResource ListItemTextStyle}"
+                                        FontAttributes="Bold"
+                                        FontSize="20" />
+                                    
                                 </StackLayout>
                             </Grid>
                             <StackLayout.GestureRecognizers>
