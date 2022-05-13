@@ -12,6 +12,19 @@ namespace GestTask.ViewModels
 {
     public class TaskMenuViewModel : BaseViewModel
     {
+        private DateTime passingDate;
+        private string name;
+        private string description;
+        private bool inToDoList;
+        private bool active;
+        private int fkCategory;
+        public DateTime PassingDate { get => passingDate; set => SetProperty(ref passingDate, value); }
+        public string Name { get => name; set => SetProperty(ref name, value); }
+        public string Description { get => description; set => SetProperty(ref description, value); }
+        public bool InToDoList { get => inToDoList; set => SetProperty(ref inToDoList, value); }
+        public bool Active { get => active; set => SetProperty(ref active, value); }
+        public int FkCategory { get => fkCategory; set => SetProperty(ref fkCategory, value); }
+
         private TaskModel _task;
         private IPopupNavigation _popup { get; set; }
         public Command SaveCommand { get; }
@@ -21,6 +34,13 @@ namespace GestTask.ViewModels
         public TaskMenuViewModel(TaskModel task)
         {
             _task = task;
+            passingDate = task.PassingDate;
+            name = task.Name;
+            description = task.Description;
+            inToDoList = task.InToDoList;
+            active = task.Active;
+            fkCategory = task.FkCategory;
+
             _popup = PopupNavigation.Instance;
             SaveCommand = new Command(async () => await ExecuteSaveCommand());
             DeleteCommand = new Command(async () => await ExecuteDeleteCommand());
@@ -37,9 +57,12 @@ namespace GestTask.ViewModels
 
         private async Task ExecuteSaveCommand()
         {
-         
-            _task.PassingDate = DateTime.UtcNow;
-            _task.Name = "Modifié";
+            _task.PassingDate = passingDate.Date;
+            _task.Name = name;
+            _task.Description = description;
+            _task.InToDoList = inToDoList;
+            _task.Active = active;
+            _task.FkCategory = fkCategory;
 
             if (!string.IsNullOrWhiteSpace(_task.Name))
             {

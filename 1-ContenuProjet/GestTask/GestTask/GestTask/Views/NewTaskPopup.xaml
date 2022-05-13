@@ -5,7 +5,7 @@
     xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
     xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
     x:Class="GestTask.Views.NewTaskPopup"
-    xmlns:local="clr-namespace:GestTask.ViewModels" x:DataType="local:NewTaskViewModel">
+    xmlns:local="clr-namespace:GestTask.ViewModels">
 
     <!--You can set an animation in the xaml file or in the csharp code behind-->
     <pages:PopupPage.Animation>
@@ -22,7 +22,7 @@
     </pages:PopupPage.Animation>
     <!--You can use any elements here which are extended from Xamarin.Forms.View-->
     <StackLayout x:DataType="local:NewTaskViewModel"
-        BackgroundColor="AliceBlue"
+        BackgroundColor="LightGoldenrodYellow"
         
         VerticalOptions="Center"
         HorizontalOptions="Center"
@@ -30,14 +30,14 @@
         <Entry Text="{Binding Name}" Placeholder="Nom de la tâche"/>
         <Entry Text="{Binding Description}" Placeholder="Description"/>
         <Label Text="Active"/>
-        <CheckBox x:Name="ActiveCheckBox" IsChecked="{Binding }"/>
+        <CheckBox x:Name="ActiveCheckBox" IsChecked="{Binding Active}"/>
         <Label Text="Date d'échéance"/>
-        <DatePicker Date="{Binding }"  x:Name="PassingDatePicker"/>
+        <DatePicker Date="{Binding PassingDate}"/>
         <Label Text="Dans la ToDoList"/>
-        <CheckBox IsChecked="{Binding }"/>
+        <CheckBox IsChecked="{Binding InToDoList}"/>
         <Label Text="Catégorie"/>
-        <Picker SelectedIndex="{Binding }"  Title="Catégorie"/>
-        <Button Text="Sauvegarder" Command="{Binding Source={RelativeSource AncestorType={x:Type local:NewTaskViewModel}}, Path=SaveCommand}"/>
-        <Button Text="Annuler" Command="{Binding Source={RelativeSource AncestorType={x:Type local:NewTaskViewModel}}, Path=CancelCommand}"/>
+        <Picker SelectedIndex="{Binding FkCategory}"  Title="Catégorie"/>
+        <Button Text="Sauvegarder" Command="{Binding SaveCommand}"/>
+        <Button Text="Annuler" Command="{Binding CancelCommand}"/>
     </StackLayout>
 </pages:PopupPage>

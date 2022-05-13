@@ -20,12 +20,21 @@
             HasBackgroundAnimation="True"/>
     </pages:PopupPage.Animation>
     <!--You can use any elements here which are extended from Xamarin.Forms.View-->
-    <StackLayout 
-        VerticalOptions="Center" 
-        HorizontalOptions="Center" 
-        Padding="20, 20, 20, 20">
-        <Label
-            Text="Test"/>
+    <StackLayout x:DataType="local:TaskMenuViewModel"
+        BackgroundColor="LightGoldenrodYellow"
+        VerticalOptions="Center"
+        HorizontalOptions="Center"
+        Padding="80, 20, 80, 20">
+        <Entry Text="{Binding Name}" Placeholder="Nom de la tâche"/>
+        <Entry Text="{Binding Description}" Placeholder="Description"/>
+        <Label Text="Active"/>
+        <CheckBox x:Name="ActiveCheckBox" IsChecked="{Binding Active}"/>
+        <Label Text="Date d'échéance"/>
+        <DatePicker Date="{Binding PassingDate}"/>
+        <Label Text="Dans la ToDoList"/>
+        <CheckBox IsChecked="{Binding InToDoList}"/>
+        <Label Text="Catégorie"/>
+        <Picker SelectedIndex="{Binding FkCategory}"  Title="Catégorie"/>
         <Button Text="Sauvegarder" Command="{Binding Source={RelativeSource AncestorType={x:Type local:TaskMenuViewModel}}, Path=SaveCommand}"/>
         <Button Text="Supprimer" Command="{Binding Source={RelativeSource AncestorType={x:Type local:TaskMenuViewModel}}, Path=DeleteCommand}"/>
         <Button Text="Annuler" Command="{Binding Source={RelativeSource AncestorType={x:Type local:TaskMenuViewModel}}, Path=CancelCommand}"/>

@@ -36,7 +36,7 @@ namespace GestTask.ViewModels
         {
             TaskModel task = new TaskModel();
             task.Id = 0;
-            task.PassingDate = passingDate;
+            task.PassingDate = passingDate.Date;
             task.Name = name;
             task.Description = description;
             task.InToDoList = inToDoList;
