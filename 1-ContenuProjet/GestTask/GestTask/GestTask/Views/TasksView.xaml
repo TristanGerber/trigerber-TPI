@@ -4,11 +4,10 @@
              xmlns:model="clr-namespace:GestTask.Models"
              xmlns:local="clr-namespace:GestTask.ViewModels" x:DataType="local:TasksViewModel"
              x:Class="GestTask.Views.TasksView"
-             Title="{Binding Title}"
              x:Name="BrowseTasksPage">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Catégorie" />
+        <ToolbarItem Text="Catégories" Command="{Binding Source={RelativeSource AncestorType={x:Type local:TasksViewModel}}, Path=FilterCommand}"/>
         <ToolbarItem Text="+" Command="{Binding Source={RelativeSource AncestorType={x:Type local:TasksViewModel}}, Path=AddTaskCommand}"/>
     </ContentPage.ToolbarItems>
 

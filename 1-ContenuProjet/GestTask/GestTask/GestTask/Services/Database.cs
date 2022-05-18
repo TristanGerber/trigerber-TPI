@@ -47,7 +47,7 @@ namespace GestTask.Services
         {
             return database.Table<TaskModel>().ToListAsync();
         }
-        public Task<int> UpdateCategoryAsync(CategoryModel cat)
+        public Task<int> SaveCategoryAsync(CategoryModel cat)
         {
             if (cat.Id != 0)
             {

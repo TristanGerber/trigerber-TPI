@@ -24,9 +24,11 @@ namespace GestTask.ViewModels
         private IPopupNavigation _popup { get; set; }
         private TaskMenuPopup _modalPage;
         private NewTaskPopup _newTaskPage;
+        private FilterPopup _filterPage;
         public ObservableCollection<TaskModel> Tasks { get; }
         public Command LoadTasksCommand { get; }
         public Command AddTaskCommand { get; }
+        public Command FilterCommand { get; }
         public Command<TaskModel> TaskTappedCommand { get; }
 
         public TasksViewModel()
@@ -36,14 +38,15 @@ namespace GestTask.ViewModels
             LoadTasksCommand = new Command(async () => await ExecuteLoadTasksCommand());
             TaskTappedCommand = new Command<TaskModel>(OnTaskSelected);
             AddTaskCommand = new Command(OnAddTask);
+            FilterCommand = new Command(OnFilter);
             _popup = PopupNavigation.Instance;
             _newTaskPage = new NewTaskPopup();
+            _filterPage = new FilterPopup();
         }
 
         async Task ExecuteLoadTasksCommand()
         {
             IsBusy = true;
-
             try
             {
                 Tasks.Clear();
@@ -88,6 +91,10 @@ namespace GestTask.ViewModels
         private async void OnAddTask(object obj)
         {
             await _popup.PushAsync(_newTaskPage, true);
+        }
+        private async void OnFilter(object obj)
+        {
+            await _popup.PushAsync(_filterPage, true);
         }
 
         async void OnTaskSelected(TaskModel task)

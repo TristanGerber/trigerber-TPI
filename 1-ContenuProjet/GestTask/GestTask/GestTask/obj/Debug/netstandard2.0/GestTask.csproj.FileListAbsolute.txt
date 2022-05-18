@@ -15,6 +15,6 @@ D:\DATA\trigerber-TPI\1-ContenuProjet\GestTask\GestTask\GestTask\bin\Debug\netst
 D:\DATA\trigerber-TPI\1-ContenuProjet\GestTask\GestTask\GestTask\obj\Debug\netstandard2.0\XamlC.stamp
 D:\DATA\trigerber-TPI\1-ContenuProjet\GestTask\GestTask\GestTask\obj\Debug\netstandard2.0\Views\TasksView.xaml.g.cs
 D:\DATA\trigerber-TPI\1-ContenuProjet\GestTask\GestTask\GestTask\obj\Debug\netstandard2.0\Views\ToDoListView.xaml.g.cs
-D:\DATA\trigerber-TPI\1-ContenuProjet\GestTask\GestTask\GestTask\obj\Debug\netstandard2.0\Views\CategoryMenuPopup.xaml.g.cs
 D:\DATA\trigerber-TPI\1-ContenuProjet\GestTask\GestTask\GestTask\obj\Debug\netstandard2.0\Views\NewTaskPopup.xaml.g.cs
 D:\DATA\trigerber-TPI\1-ContenuProjet\GestTask\GestTask\GestTask\obj\Debug\netstandard2.0\Views\TaskMenuPopup.xaml.g.cs
+D:\DATA\trigerber-TPI\1-ContenuProjet\GestTask\GestTask\GestTask\obj\Debug\netstandard2.0\Views\FilterPopup.xaml.g.cs

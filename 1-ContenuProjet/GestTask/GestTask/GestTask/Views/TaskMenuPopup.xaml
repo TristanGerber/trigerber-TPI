@@ -34,7 +34,7 @@
         <Label Text="Dans la ToDoList"/>
         <CheckBox IsChecked="{Binding InToDoList}"/>
         <Label Text="Catégorie"/>
-        <Picker SelectedIndex="{Binding FkCategory}"  Title="Catégorie"/>
+        <Picker x:Name="catPicker" Title="Catégorie" ItemsSource="{Binding Categories}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding SelectedCategory}"/>
         <Button Text="Sauvegarder" Command="{Binding Source={RelativeSource AncestorType={x:Type local:TaskMenuViewModel}}, Path=SaveCommand}"/>
         <Button Text="Supprimer" Command="{Binding Source={RelativeSource AncestorType={x:Type local:TaskMenuViewModel}}, Path=DeleteCommand}"/>
         <Button Text="Annuler" Command="{Binding Source={RelativeSource AncestorType={x:Type local:TaskMenuViewModel}}, Path=CancelCommand}"/>

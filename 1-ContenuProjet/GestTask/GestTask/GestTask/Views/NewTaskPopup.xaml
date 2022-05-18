@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<pages:PopupPage 
+<pages:PopupPage
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
@@ -9,7 +9,7 @@
 
     <!--You can set an animation in the xaml file or in the csharp code behind-->
     <pages:PopupPage.Animation>
-        <animations:ScaleAnimation 
+        <animations:ScaleAnimation
             PositionIn="Center"
             PositionOut="Center"
             ScaleIn="1.2"
@@ -36,7 +36,7 @@
         <Label Text="Dans la ToDoList"/>
         <CheckBox IsChecked="{Binding InToDoList}"/>
         <Label Text="Catégorie"/>
-        <Picker SelectedIndex="{Binding FkCategory}"  Title="Catégorie"/>
+        <Picker x:Name="catPicker" ItemsSource="{Binding Categories}" SelectedItem="{Binding SelectedCategory}" ItemDisplayBinding="{Binding Name}" Title="Catégorie"/>
         <Button Text="Sauvegarder" Command="{Binding SaveCommand}"/>
         <Button Text="Annuler" Command="{Binding CancelCommand}"/>
     </StackLayout>

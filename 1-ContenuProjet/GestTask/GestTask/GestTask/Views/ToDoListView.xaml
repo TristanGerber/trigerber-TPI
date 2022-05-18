@@ -4,11 +4,18 @@
              xmlns:model="clr-namespace:GestTask.Models"
              xmlns:local="clr-namespace:GestTask.ViewModels" x:DataType="local:ToDoListViewModel"
              x:Class="GestTask.Views.ToDoListView"
-             Title="{Binding Title}"
              x:Name="BrowseToDoListView">
-    
+    <ContentPage.Resources>
+        <Style TargetType="BoxView"
+               Class="Category">
+            <Setter Property="BackgroundColor"
+                    Value="#CCCCCC" />
+            <Setter Property="HeightRequest"
+                    Value="1" />
+        </Style>
+    </ContentPage.Resources>
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Catégorie" />
+        <ToolbarItem Text="Catégories" StyleClass="Category"/>
         <ToolbarItem Text="+" Command="{Binding Source={RelativeSource AncestorType={x:Type local:TasksViewModel}}, Path=AddTaskCommand}"/>
     </ContentPage.ToolbarItems>
     

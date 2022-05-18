@@ -17,13 +17,15 @@ namespace GestTask.ViewModels
         private string description;
         private bool inToDoList;
         private bool active;
-        private int fkCategory;
+        private List<CategoryModel> categories;
+        private CategoryModel selectedCategory;
         public DateTime PassingDate { get => passingDate; set => SetProperty(ref passingDate, value); }
         public string Name { get => name; set => SetProperty(ref name, value); }
         public string Description { get => description; set => SetProperty(ref description, value); }
         public bool InToDoList { get => inToDoList; set => SetProperty(ref inToDoList, value); }
         public bool Active { get => active; set => SetProperty(ref active, value); }
-        public int FkCategory { get => fkCategory; set => SetProperty(ref fkCategory, value); }
+        public List<CategoryModel> Categories { get => categories; set => SetProperty(ref categories, value); }
+        public CategoryModel SelectedCategory { get => selectedCategory; set => SetProperty(ref selectedCategory, value); }
 
         private TaskModel _task;
         private IPopupNavigation _popup { get; set; }
@@ -39,7 +41,8 @@ namespace GestTask.ViewModels
             description = task.Description;
             inToDoList = task.InToDoList;
             active = task.Active;
-            fkCategory = task.FkCategory;
+            categories = App.Db.GetCategoriesAsync().Result;
+            selectedCategory = App.Db.GetCategoryAsync(task.FkCategory).Result;
 
             _popup = PopupNavigation.Instance;
             SaveCommand = new Command(async () => await ExecuteSaveCommand());
@@ -62,7 +65,7 @@ namespace GestTask.ViewModels
             _task.Description = description;
             _task.InToDoList = inToDoList;
             _task.Active = active;
-            _task.FkCategory = fkCategory;
+            _task.FkCategory = SelectedCategory.Id;
 
             if (!string.IsNullOrWhiteSpace(_task.Name))
             {
@@ -77,6 +80,10 @@ namespace GestTask.ViewModels
         {
             // Navigate backwards
             await _popup.PopAsync();
+        }
+        public Task<List<CategoryModel>> GetCategories()
+        {
+            return App.Db.GetCategoriesAsync();
         }
     }
 }

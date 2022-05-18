@@ -1,7 +1,5 @@
 ﻿using GestTask.Models;
 using GestTask.ViewModels;
-using System;
-using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace GestTask.Views
