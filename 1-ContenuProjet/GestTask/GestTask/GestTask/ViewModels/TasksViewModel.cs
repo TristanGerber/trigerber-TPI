@@ -4,17 +4,15 @@
  * Last updated : 05.05.2022 */
 
 using GestTask.Models;
+using GestTask.Views;
+using Rg.Plugins.Popup.Contracts;
+using Rg.Plugins.Popup.Events;
+using Rg.Plugins.Popup.Services;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Threading.Tasks;
-using Xamarin.Forms;
-using Rg.Plugins.Popup.Contracts;
-using Rg.Plugins.Popup.Services;
-using GestTask.Views;
-using Rg.Plugins.Popup.Events;
 using System.Linq;
+using Xamarin.Forms;
 
 namespace GestTask.ViewModels
 {
@@ -23,8 +21,8 @@ namespace GestTask.ViewModels
         private TaskModel _selectedTask;
         private IPopupNavigation _popup { get; set; }
         private TaskMenuPopup _modalPage;
-        private NewTaskPopup _newTaskPage;
-        private FilterPopup _filterPage;
+        private readonly NewTaskPopup _newTaskPage;
+        private readonly FilterPopup _filterPage;
         public ObservableCollection<TaskModel> Tasks { get; }
         public Command LoadTasksCommand { get; }
         public Command AddTaskCommand { get; }
@@ -35,7 +33,7 @@ namespace GestTask.ViewModels
         {
             Title = "Tâches";
             Tasks = new ObservableCollection<TaskModel>();
-            LoadTasksCommand = new Command(async () => await ExecuteLoadTasksCommand());
+            LoadTasksCommand = new Command(async () => ExecuteLoadTasksCommand());
             TaskTappedCommand = new Command<TaskModel>(OnTaskSelected);
             AddTaskCommand = new Command(OnAddTask);
             FilterCommand = new Command(OnFilter);
@@ -44,14 +42,14 @@ namespace GestTask.ViewModels
             _filterPage = new FilterPopup();
         }
 
-        async Task ExecuteLoadTasksCommand()
+        private void ExecuteLoadTasksCommand()
         {
             IsBusy = true;
             try
             {
                 Tasks.Clear();
-                List<TaskModel> tasks = await App.Db.GetTasksAsync(true);
-                tasks = new List<TaskModel>(tasks.OrderBy(i => i.PassingDate));
+                ObservableCollection<TaskModel> tasks = App.Db.GetTasksAsync(true);
+                tasks = new ObservableCollection<TaskModel>(tasks.OrderBy(i => i.PassingDate));
                 foreach (TaskModel task in tasks)
                 {
                     Tasks.Add(task);
@@ -97,10 +95,13 @@ namespace GestTask.ViewModels
             await _popup.PushAsync(_filterPage, true);
         }
 
-        async void OnTaskSelected(TaskModel task)
+        private async void OnTaskSelected(TaskModel task)
         {
             if (task == null)
+            {
                 return;
+            }
+
             _modalPage = new TaskMenuPopup(task);
             await _popup.PushAsync(_modalPage, true);
         }

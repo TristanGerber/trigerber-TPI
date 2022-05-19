@@ -6,7 +6,8 @@
     xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
     x:Class="GestTask.Views.FilterPopup"
     xmlns:model="clr-namespace:GestTask.Models"
-    xmlns:local="clr-namespace:GestTask.ViewModels">
+    xmlns:local="clr-namespace:GestTask.ViewModels" 
+    x:DataType="local:FilterViewModel">
 
     <!--You can set an animation in the xaml file or in the csharp code behind-->
     <pages:PopupPage.Animation>
@@ -21,42 +22,71 @@
             EasingOut="SinIn"
             HasBackgroundAnimation="True"/>
     </pages:PopupPage.Animation>
-    
-    <CollectionView x:Name="CategoriesListView" x:DataType="local:FilterViewModel"
-                ItemsSource="{Binding Categories}"
-                SelectionMode="None">
-        <CollectionView.ItemTemplate>
-            <DataTemplate>
-                <Frame BorderColor="Black" Padding="1">
-                    <StackLayout x:DataType="model:CategoryModel" BackgroundColor="LightGoldenrodYellow" Padding="20,15,10,15">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="3*"/>
-                                <ColumnDefinition Width="0"/>
-                                <ColumnDefinition Width="0"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <StackLayout Grid.Column="0">
-                                <Label Text="{Binding Name}"
-                                        LineBreakMode="NoWrap"
-                                        Style="{DynamicResource ListItemTextStyle}"
-                                        FontAttributes="Bold"
-                                        FontSize="20" />
-
-                            </StackLayout>
-                            <Label>test</Label>
-                        </Grid>
-                        <StackLayout.GestureRecognizers>
-                            <TapGestureRecognizer
-                                    NumberOfTapsRequired="1"
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:FilterViewModel}}, Path=CategoryTappedCommand}"
-                                    CommandParameter="{Binding .}">
-                            </TapGestureRecognizer>
-                        </StackLayout.GestureRecognizers>
-                    </StackLayout>
-                </Frame>
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
-    </CollectionView>
+    <pages:PopupPage.Content>
+        <Frame x:Name="PopupListFrame" Margin="20,20,20,20" Padding="5,5,5,5" HasShadow="False" HorizontalOptions="CenterAndExpand" VerticalOptions="FillAndExpand" CornerRadius="10" BorderColor="{StaticResource Primary}" BackgroundColor="{StaticResource Primary}" >
+            <Frame HorizontalOptions="CenterAndExpand"
+                   VerticalOptions="FillAndExpand"
+                   CornerRadius="10"
+                   HasShadow="false"
+                   Margin="0"
+                   Padding="10,10,10,10">
+                <RefreshView Command="{Binding LoadCategoriesCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+                    <CollectionView x:Name="CategoriesListView" ItemsSource="{Binding Categories}" SelectionMode="None">
+                        <CollectionView.Header>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="4*" />
+                                    <ColumnDefinition Width="3*" />
+                                    <ColumnDefinition Width="3*" />
+                                </Grid.ColumnDefinitions>
+                                <Label Text="Choisir une catégorie" BackgroundColor="White" FontAttributes="Bold" FontSize="Small" TextColor="Black" VerticalTextAlignment="Center" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3"/>
+                                <Button Text="+" BackgroundColor="White" FontAttributes="Bold" FontSize="Small" TextColor="Black" Grid.Column="3" Grid.Row="0" Command="{Binding AddCategoryCommand}"/>
+                            </Grid>
+                        </CollectionView.Header>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Frame BorderColor="Black" Padding="1">
+                                    <StackLayout x:DataType="model:CategoryModel" BackgroundColor="LightGoldenrodYellow" Padding="20,15,10,15">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="3*"/>
+                                                <ColumnDefinition Width="0"/>
+                                                <ColumnDefinition Width="0"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <StackLayout Grid.Column="0">
+                                                <Label Text="{Binding Name}"
+                                                       LineBreakMode="NoWrap"
+                                                       Style="{DynamicResource ListItemTextStyle}"
+                                                       FontAttributes="Bold"
+                                                       FontSize="20" />
+                                                <ImageButton Source="edit.png"
+                                                             WidthRequest="40"
+                                                             HorizontalOptions="EndAndExpand"
+                                                             Clicked="OnEditButtonClicked"/>
+                                                <ImageButton Source="delete.png"
+                                                             WidthRequest="40"
+                                                             HorizontalOptions="EndAndExpand"
+                                                             Command="{Binding Source={RelativeSource AncestorType={x:Type local:FilterViewModel}}, Path=DeleteCategoryCommand}"
+                                                             CommandParameter="{Binding .}"/>
+                                            </StackLayout>
+                                        </Grid>
+                                        <StackLayout.GestureRecognizers>
+                                            <TapGestureRecognizer
+                                                NumberOfTapsRequired="1"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type local:FilterViewModel}}, Path=CategoryTappedCommand}"
+                                                CommandParameter="{Binding .}">
+                                            </TapGestureRecognizer>
+                                        </StackLayout.GestureRecognizers>
+                                    </StackLayout>
+                                </Frame>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </RefreshView>
+            </Frame>
+        </Frame>
+    </pages:PopupPage.Content>
 
 </pages:PopupPage>

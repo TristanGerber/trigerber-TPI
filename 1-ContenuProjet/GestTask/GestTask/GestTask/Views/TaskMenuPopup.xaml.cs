@@ -13,5 +13,10 @@ namespace GestTask.Views
             BindingContext = _viewModel = new TaskMenuViewModel(task);
             InitializeComponent();
         }
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            _viewModel.OnAppearing();
+        }
     }
 }

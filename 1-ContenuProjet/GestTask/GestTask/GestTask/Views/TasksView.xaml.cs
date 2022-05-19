@@ -3,9 +3,7 @@
  * Project creation date : 05.05.2022
  * Last updated : 05.05.2022 */
 
-using GestTask.Models;
 using GestTask.ViewModels;
-using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -23,11 +21,10 @@ namespace GestTask.Views
         /// <summary>
         /// On appearing, calls the OnAppearing method of the ViewModel
         /// </summary>
-        protected override async void OnAppearing()
+        protected override void OnAppearing()
         {
             base.OnAppearing();
             _viewModel.OnAppearing();
-            TasksListView.ItemsSource = await App.Db.GetTasksAsync();
         }
     }
 }

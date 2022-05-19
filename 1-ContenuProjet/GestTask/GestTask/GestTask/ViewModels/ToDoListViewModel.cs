@@ -8,7 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace GestTask.ViewModels
@@ -26,19 +25,19 @@ namespace GestTask.ViewModels
         {
             Title = "ToDoList";
             Tasks = new ObservableCollection<TaskModel>();
-            LoadTasksCommand = new Command(async () => await ExecuteLoadTasksCommand());
+            LoadTasksCommand = new Command(ExecuteLoadTasksCommand);
             TaskTapped = new Command<TaskModel>(OnTaskSelected);
             AddTaskCommand = new Command(OnAddTask);
         }
 
-        async Task ExecuteLoadTasksCommand()
+        void ExecuteLoadTasksCommand()
         {
             IsBusy = true;
 
             try
             {
                 Tasks.Clear();
-                IEnumerable<TaskModel> tasks = await App.Db.GetTasksAsync(true);
+                IEnumerable<TaskModel> tasks = App.Db.GetTasksAsync(true);
                 foreach (TaskModel task in tasks)
                 {
                     if (task.InToDoList)

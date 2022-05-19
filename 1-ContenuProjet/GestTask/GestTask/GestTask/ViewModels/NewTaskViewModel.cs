@@ -2,7 +2,7 @@
 using Rg.Plugins.Popup.Contracts;
 using Rg.Plugins.Popup.Services;
 using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -12,7 +12,7 @@ namespace GestTask.ViewModels
     {
         private DateTime passingDate;
         private string name;
-        private List<CategoryModel> categories;
+        private ObservableCollection<CategoryModel> categories;
         private CategoryModel selectedCategory;
         private string description;
         private bool inToDoList;
@@ -22,7 +22,7 @@ namespace GestTask.ViewModels
         public Command CancelCommand { get; }
         public DateTime PassingDate { get => passingDate; set => SetProperty(ref passingDate, value); }
         public string Name { get => name; set => SetProperty(ref name, value); }
-        public List<CategoryModel> Categories { get => categories; set => SetProperty(ref categories, value); }
+        public ObservableCollection<CategoryModel> Categories { get => categories; set => SetProperty(ref categories, value); }
         public CategoryModel SelectedCategory { get => selectedCategory; set => SetProperty(ref selectedCategory, value); }
         public string Description { get => description; set => SetProperty(ref description, value); }
         public bool InToDoList { get => inToDoList; set => SetProperty(ref inToDoList, value); }
@@ -33,7 +33,7 @@ namespace GestTask.ViewModels
             _popup = PopupNavigation.Instance;
             SaveCommand = new Command(async () => await ExecuteSaveCommand());
             CancelCommand = new Command(async () => await ExecuteCancelCommand());
-            Categories = App.Db.GetCategoriesAsync().Result;
+            Categories = App.Db.GetCategoriesAsync();
         }
 
         private async Task ExecuteSaveCommand()
@@ -59,6 +59,10 @@ namespace GestTask.ViewModels
         {
             // Navigate backwards
             await _popup.PopAsync();
+        }
+        public void OnAppearing()
+        {
+            IsBusy = true;
         }
     }
 }

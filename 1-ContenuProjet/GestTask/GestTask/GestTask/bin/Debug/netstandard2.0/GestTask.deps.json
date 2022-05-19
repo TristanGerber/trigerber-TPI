@@ -11,6 +11,7 @@
         "dependencies": {
           "NETStandard.Library": "2.0.3",
           "Rg.Plugins.Popup": "2.1.0",
+          "Syncfusion.Xamarin.SfListView": "20.1.0.56",
           "Xamarin.Essentials": "1.6.1",
           "Xamarin.Forms": "5.0.0.2012",
           "sqlite-net-pcl": "1.8.116"
@@ -80,6 +81,56 @@
           "lib/netstandard2.0/SQLitePCLRaw.provider.e_sqlite3.dll": {
             "assemblyVersion": "2.0.4.976",
             "fileVersion": "2.0.4.976"
+          }
+        }
+      },
+      "Syncfusion.Licensing/20.1.0.56": {
+        "runtime": {
+          "lib/netstandard2.0/Syncfusion.Licensing.dll": {
+            "assemblyVersion": "20.1.0.56",
+            "fileVersion": "20.1.0.56"
+          }
+        }
+      },
+      "Syncfusion.Xamarin.Core/20.1.0.56": {
+        "dependencies": {
+          "Syncfusion.Licensing": "20.1.0.56",
+          "Xamarin.Forms": "5.0.0.2012"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Syncfusion.Core.XForms.dll": {
+            "assemblyVersion": "20.1451.0.56",
+            "fileVersion": "20.1451.0.56"
+          }
+        }
+      },
+      "Syncfusion.Xamarin.DataSource/20.1.0.56": {
+        "runtime": {
+          "lib/netstandard2.0/Syncfusion.DataSource.Portable.dll": {
+            "assemblyVersion": "20.1451.0.56",
+            "fileVersion": "20.1451.0.56"
+          }
+        }
+      },
+      "Syncfusion.Xamarin.GridCommon/20.1.0.56": {
+        "runtime": {
+          "lib/netstandard2.0/Syncfusion.GridCommon.Portable.dll": {
+            "assemblyVersion": "20.1451.0.56",
+            "fileVersion": "20.1451.0.56"
+          }
+        }
+      },
+      "Syncfusion.Xamarin.SfListView/20.1.0.56": {
+        "dependencies": {
+          "Syncfusion.Xamarin.Core": "20.1.0.56",
+          "Syncfusion.Xamarin.DataSource": "20.1.0.56",
+          "Syncfusion.Xamarin.GridCommon": "20.1.0.56",
+          "Xamarin.Forms": "5.0.0.2012"
+        },
+        "runtime": {
+          "lib/netstandard2.0/Syncfusion.SfListView.XForms.dll": {
+            "assemblyVersion": "20.1451.0.56",
+            "fileVersion": "20.1451.0.56"
           }
         }
       },
@@ -210,6 +261,41 @@
       "sha512": "sha512-YiqCw+PfiPIuX2aZnEqt1ya5ldGm4ParIqzaRXtztDu8mdzZxOXVYOrKZazXg6nbwYbCP1H5mOYGmBFQ2W0M5g==",
       "path": "sqlitepclraw.provider.e_sqlite3/2.0.4",
       "hashPath": "sqlitepclraw.provider.e_sqlite3.2.0.4.nupkg.sha512"
+    },
+    "Syncfusion.Licensing/20.1.0.56": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-n/4jW8VTykMfHKPx4Cncz3fjvi4YTcE1gLnlIaSN+XLOuPV7mWQJmw/XnF1IQnaNgqqtSXsH9wSqpOvcDIic1A==",
+      "path": "syncfusion.licensing/20.1.0.56",
+      "hashPath": "syncfusion.licensing.20.1.0.56.nupkg.sha512"
+    },
+    "Syncfusion.Xamarin.Core/20.1.0.56": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-lkEswyL54WXVen5t1/KKGfKeabMq3Y/3RFj4UfwRBU54/BHE37qeZ3kS91GNMBShclcSZdSMpZ/x6Gjh76+VPg==",
+      "path": "syncfusion.xamarin.core/20.1.0.56",
+      "hashPath": "syncfusion.xamarin.core.20.1.0.56.nupkg.sha512"
+    },
+    "Syncfusion.Xamarin.DataSource/20.1.0.56": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-CctdCqRDFwvGvmaJCl93p9hXA9aIjVKlAMxkf1rBZlr/onprUJmWEvCQo0Dlm5OzQ+1GRDuMjc6we2TTKIEdwQ==",
+      "path": "syncfusion.xamarin.datasource/20.1.0.56",
+      "hashPath": "syncfusion.xamarin.datasource.20.1.0.56.nupkg.sha512"
+    },
+    "Syncfusion.Xamarin.GridCommon/20.1.0.56": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ytN8xnWXgDsy05ko82cUOgsOTzFXxb7zmWQ7tDTqf5q9QFkxY+7Hw5E2GAWv9DlL79HProh9y19lCk4onSnJaw==",
+      "path": "syncfusion.xamarin.gridcommon/20.1.0.56",
+      "hashPath": "syncfusion.xamarin.gridcommon.20.1.0.56.nupkg.sha512"
+    },
+    "Syncfusion.Xamarin.SfListView/20.1.0.56": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-GH+h1svvApWWTdei2pal0jnH2ZAwRvYSV720HguJnE5eQvLgK1Et+F0ry7JLV8bE7AXyXt75WiX/VnEovSHxVg==",
+      "path": "syncfusion.xamarin.sflistview/20.1.0.56",
+      "hashPath": "syncfusion.xamarin.sflistview.20.1.0.56.nupkg.sha512"
     },
     "System.Buffers/4.4.0": {
       "type": "package",

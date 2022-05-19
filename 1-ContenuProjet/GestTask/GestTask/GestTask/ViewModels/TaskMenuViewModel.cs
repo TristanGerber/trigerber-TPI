@@ -2,29 +2,27 @@
 using Rg.Plugins.Popup.Contracts;
 using Rg.Plugins.Popup.Services;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace GestTask.ViewModels
 {
-    public class TaskMenuViewModel : BaseViewModel
+    public class TaskMenuViewModel : TasksViewModel
     {
         private DateTime passingDate;
         private string name;
         private string description;
         private bool inToDoList;
         private bool active;
-        private List<CategoryModel> categories;
+        private ObservableCollection<CategoryModel> categories;
         private CategoryModel selectedCategory;
         public DateTime PassingDate { get => passingDate; set => SetProperty(ref passingDate, value); }
         public string Name { get => name; set => SetProperty(ref name, value); }
         public string Description { get => description; set => SetProperty(ref description, value); }
         public bool InToDoList { get => inToDoList; set => SetProperty(ref inToDoList, value); }
         public bool Active { get => active; set => SetProperty(ref active, value); }
-        public List<CategoryModel> Categories { get => categories; set => SetProperty(ref categories, value); }
+        public ObservableCollection<CategoryModel> Categories { get => categories; set => SetProperty(ref categories, value); }
         public CategoryModel SelectedCategory { get => selectedCategory; set => SetProperty(ref selectedCategory, value); }
 
         private TaskModel _task;
@@ -36,13 +34,13 @@ namespace GestTask.ViewModels
         public TaskMenuViewModel(TaskModel task)
         {
             _task = task;
-            passingDate = task.PassingDate;
-            name = task.Name;
-            description = task.Description;
-            inToDoList = task.InToDoList;
-            active = task.Active;
-            categories = App.Db.GetCategoriesAsync().Result;
-            selectedCategory = App.Db.GetCategoryAsync(task.FkCategory).Result;
+            PassingDate = task.PassingDate;
+            Name = task.Name;
+            Description = task.Description;
+            InToDoList = task.InToDoList;
+            Active = task.Active;
+            Categories = App.Db.GetCategoriesAsync();
+            SelectedCategory = App.Db.GetCategoryAsync(task.FkCategory).Result;
 
             _popup = PopupNavigation.Instance;
             SaveCommand = new Command(async () => await ExecuteSaveCommand());
@@ -52,8 +50,9 @@ namespace GestTask.ViewModels
 
         private async Task ExecuteDeleteCommand()
         {
+            
             await App.Db.DeleteTaskAsync(_task);
-
+            base.Tasks.Remove(_task);
             // Navigate backwards
             await _popup.PopAsync();
         }
@@ -81,9 +80,9 @@ namespace GestTask.ViewModels
             // Navigate backwards
             await _popup.PopAsync();
         }
-        public Task<List<CategoryModel>> GetCategories()
+        public void OnAppearing()
         {
-            return App.Db.GetCategoriesAsync();
+            IsBusy = true;
         }
     }
 }

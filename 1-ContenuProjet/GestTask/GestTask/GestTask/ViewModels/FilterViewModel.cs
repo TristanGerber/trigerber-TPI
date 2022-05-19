@@ -5,16 +5,11 @@
 
 using GestTask.Models;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
-using Rg.Plugins.Popup.Contracts;
-using Rg.Plugins.Popup.Services;
-using GestTask.Views;
-using Rg.Plugins.Popup.Events;
-using System.Linq;
 
 namespace GestTask.ViewModels
 {
@@ -24,26 +19,28 @@ namespace GestTask.ViewModels
         public ObservableCollection<CategoryModel> Categories { get; }
         public Command LoadCategoriesCommand { get; }
         public Command AddCategoryCommand { get; }
+        public Command DeleteCategoryCommand { get; }
         public Command<CategoryModel> CategoryTappedCommand { get; }
 
         public FilterViewModel()
         {
             Title = "Categories";
             Categories = new ObservableCollection<CategoryModel>();
-            LoadCategoriesCommand = new Command(async () => await ExecuteLoadCategoriesCommand());
+            LoadCategoriesCommand = new Command(ExecuteLoadCategoriesCommand);
             CategoryTappedCommand = new Command<CategoryModel>(OnCategorySelected);
             AddCategoryCommand = new Command(OnAddCategory);
+            DeleteCategoryCommand = new Command<CategoryModel>(ExecuteDeleteCategoryCommand);
         }
 
-        async Task ExecuteLoadCategoriesCommand()
+        private void ExecuteLoadCategoriesCommand()
         {
             IsBusy = true;
 
             try
             {
                 Categories.Clear();
-                List<CategoryModel> categories = await App.Db.GetCategoriesAsync(true);
-                categories = new List<CategoryModel>(categories.OrderBy(i => i.Name));
+                ObservableCollection<CategoryModel> categories = App.Db.GetCategoriesAsync(true);
+                categories = new ObservableCollection<CategoryModel>(categories.OrderBy(i => i.Name));
                 foreach (CategoryModel category in categories)
                 {
                     Categories.Add(category);
@@ -75,10 +72,20 @@ namespace GestTask.ViewModels
             }
         }
 
-        private async void OnAddCategory(object obj)
+        private void OnAddCategory(object obj)
         {
-            
+            CategoryModel newCategory = new CategoryModel();
+            newCategory.Id = 0;
+            newCategory.Name = "new";
+            newCategory.Color = "new";
+            Categories.Add(newCategory);
         }
+        private async void ExecuteDeleteCategoryCommand(CategoryModel cat)
+        {
+            Categories.Remove(cat);
+            await App.Db.DeleteCategoryAsync(cat);
+        }
+
 
         async void OnCategorySelected(CategoryModel category)
         {

@@ -6,6 +6,7 @@
 using GestTask.Models;
 using SQLite;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
 namespace GestTask.Services
@@ -43,9 +44,9 @@ namespace GestTask.Services
             return database.Table<TaskModel>().Where(i => i.Id == id).FirstOrDefaultAsync();
         }
 
-        public Task<List<TaskModel>> GetTasksAsync(bool forceRefresh = false)
+        public ObservableCollection<TaskModel> GetTasksAsync(bool forceRefresh = false)
         {
-            return database.Table<TaskModel>().ToListAsync();
+            return new ObservableCollection<TaskModel>(database.Table<TaskModel>().ToListAsync().Result);
         }
         public Task<int> SaveCategoryAsync(CategoryModel cat)
         {
@@ -69,9 +70,9 @@ namespace GestTask.Services
             return database.Table<CategoryModel>().Where(i => i.Id == id).FirstOrDefaultAsync();
         }
 
-        public Task<List<CategoryModel>> GetCategoriesAsync(bool forceRefresh = false)
+        public ObservableCollection<CategoryModel> GetCategoriesAsync(bool forceRefresh = false)
         {
-            return database.Table<CategoryModel>().ToListAsync();
+            return new ObservableCollection<CategoryModel>(database.Table<CategoryModel>().ToListAsync().Result);
         }
     }
 }
