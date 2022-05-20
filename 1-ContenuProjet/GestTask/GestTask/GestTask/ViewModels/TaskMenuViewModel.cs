@@ -17,6 +17,7 @@ namespace GestTask.ViewModels
         private bool active;
         private ObservableCollection<CategoryModel> categories;
         private CategoryModel selectedCategory;
+        private TasksViewModel _baseViewModel;
         public DateTime PassingDate { get => passingDate; set => SetProperty(ref passingDate, value); }
         public string Name { get => name; set => SetProperty(ref name, value); }
         public string Description { get => description; set => SetProperty(ref description, value); }
@@ -31,8 +32,9 @@ namespace GestTask.ViewModels
         public Command DeleteCommand { get; }
         public Command CancelCommand { get; }
 
-        public TaskMenuViewModel(TaskModel task)
+        public TaskMenuViewModel(TaskModel task, TasksViewModel tasksViewModel)
         {
+            _baseViewModel = tasksViewModel;
             _task = task;
             PassingDate = task.PassingDate;
             Name = task.Name;
@@ -52,8 +54,9 @@ namespace GestTask.ViewModels
         {
             
             await App.Db.DeleteTaskAsync(_task);
-            base.Tasks.Remove(_task);
+
             // Navigate backwards
+            _baseViewModel.ExecuteLoadTasksCommand();
             await _popup.PopAsync();
         }
 
@@ -72,6 +75,7 @@ namespace GestTask.ViewModels
             }
 
             // Navigate backwards
+            _baseViewModel.ExecuteLoadTasksCommand();
             await _popup.PopAsync();
         }
 

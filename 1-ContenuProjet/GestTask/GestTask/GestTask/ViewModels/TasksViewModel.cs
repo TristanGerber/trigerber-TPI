@@ -21,10 +21,14 @@ namespace GestTask.ViewModels
         private TaskModel _selectedTask;
         private IPopupNavigation _popup { get; set; }
         private TaskMenuPopup _modalPage;
-        private readonly NewTaskPopup _newTaskPage;
-        private readonly FilterPopup _filterPage;
+        private NewTaskPopup _newTaskPage;
+        private FilterPopup _filterPage;
+        public CategoryModel FilterCategory;
+        public bool FilterOn = false;
+        public bool ToDoListOn = false;
         public ObservableCollection<TaskModel> Tasks { get; }
         public Command LoadTasksCommand { get; }
+        public Command RemoveFiltersCommand { get; }
         public Command AddTaskCommand { get; }
         public Command FilterCommand { get; }
         public Command<TaskModel> TaskTappedCommand { get; }
@@ -35,24 +39,54 @@ namespace GestTask.ViewModels
             Tasks = new ObservableCollection<TaskModel>();
             LoadTasksCommand = new Command(async () => ExecuteLoadTasksCommand());
             TaskTappedCommand = new Command<TaskModel>(OnTaskSelected);
-            AddTaskCommand = new Command(OnAddTask);
-            FilterCommand = new Command(OnFilter);
+            AddTaskCommand = new Command(ExecuteAddTaskCommand);
+            FilterCommand = new Command(ExecuteFilterCommand);
+            RemoveFiltersCommand = new Command(ExecuteRemoveFiltersCommand);
+
             _popup = PopupNavigation.Instance;
-            _newTaskPage = new NewTaskPopup();
-            _filterPage = new FilterPopup();
+            _newTaskPage = new NewTaskPopup(this);
         }
 
-        private void ExecuteLoadTasksCommand()
+        public void ExecuteLoadTasksCommand()
         {
             IsBusy = true;
             try
             {
                 Tasks.Clear();
                 ObservableCollection<TaskModel> tasks = App.Db.GetTasksAsync(true);
-                tasks = new ObservableCollection<TaskModel>(tasks.OrderBy(i => i.PassingDate));
-                foreach (TaskModel task in tasks)
+                tasks = new ObservableCollection<TaskModel>(tasks.OrderByDescending(i => i.PassingDate));
+                if (FilterOn)
                 {
-                    Tasks.Add(task);
+                    if (ToDoListOn)
+                    {
+                        foreach (TaskModel task in tasks)
+                        {
+                            if (task.InToDoList && task.FkCategory == FilterCategory.Id)
+                            {
+                                Tasks.Add(task);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    if (ToDoListOn)
+                    {
+                        foreach (TaskModel task in tasks)
+                        {
+                            if (task.InToDoList)
+                            {
+                                Tasks.Add(task);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        foreach (TaskModel task in tasks)
+                        {
+                            Tasks.Add(task);
+                        }
+                    }
                 }
             }
             catch (Exception ex)
@@ -86,12 +120,13 @@ namespace GestTask.ViewModels
             }
         }
 
-        private async void OnAddTask(object obj)
+        private async void ExecuteAddTaskCommand(object obj)
         {
             await _popup.PushAsync(_newTaskPage, true);
         }
-        private async void OnFilter(object obj)
+        private async void ExecuteFilterCommand(object obj)
         {
+            _filterPage = new FilterPopup(this);
             await _popup.PushAsync(_filterPage, true);
         }
 
@@ -102,8 +137,13 @@ namespace GestTask.ViewModels
                 return;
             }
 
-            _modalPage = new TaskMenuPopup(task);
+            _modalPage = new TaskMenuPopup(task, this);
             await _popup.PushAsync(_modalPage, true);
+        }
+        private void ExecuteRemoveFiltersCommand(object obj)
+        {
+            FilterOn = false;
+            ExecuteLoadTasksCommand();
         }
     }
 }

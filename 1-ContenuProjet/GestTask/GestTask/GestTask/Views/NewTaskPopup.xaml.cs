@@ -7,9 +7,9 @@ namespace GestTask.Views
     public partial class NewTaskPopup : Rg.Plugins.Popup.Pages.PopupPage
     {
         NewTaskViewModel _viewModel;
-        public NewTaskPopup()
+        public NewTaskPopup(TasksViewModel tasksViewModel)
         {
-            BindingContext = _viewModel = new NewTaskViewModel();
+            BindingContext = _viewModel = new NewTaskViewModel(tasksViewModel);
             InitializeComponent();
         }
         protected override void OnAppearing()

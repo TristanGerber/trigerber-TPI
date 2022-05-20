@@ -12,10 +12,11 @@ namespace GestTask.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ToDoListView : ContentPage
     {
-        ToDoListViewModel _viewModel;
+        TasksViewModel _viewModel;
         public ToDoListView()
         {
-            BindingContext = _viewModel = new ToDoListViewModel();
+            BindingContext = _viewModel = new TasksViewModel();
+            _viewModel.ToDoListOn = true;
             InitializeComponent();
         }
         /// <summary>

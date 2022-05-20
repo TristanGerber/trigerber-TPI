@@ -4,6 +4,9 @@
  * Last updated : 05.05.2022 */
 
 using GestTask.Models;
+using GestTask.Views;
+using Rg.Plugins.Popup.Contracts;
+using Rg.Plugins.Popup.Services;
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -16,23 +19,32 @@ namespace GestTask.ViewModels
     public class FilterViewModel : BaseViewModel
     {
         private CategoryModel _selectedCategory;
+        private NewCategoryPopup _newCategoryPage;
+        private EditCategoryPopup _editCategoryPage;
+        private IPopupNavigation _popup { get; set; }
+        private TasksViewModel _baseViewModel;
         public ObservableCollection<CategoryModel> Categories { get; }
         public Command LoadCategoriesCommand { get; }
         public Command AddCategoryCommand { get; }
         public Command DeleteCategoryCommand { get; }
+        public Command EditCategoryCommand { get; }
         public Command<CategoryModel> CategoryTappedCommand { get; }
 
-        public FilterViewModel()
+        public FilterViewModel(TasksViewModel tasksViewModel)
         {
+            _baseViewModel = tasksViewModel;
             Title = "Categories";
             Categories = new ObservableCollection<CategoryModel>();
+            _popup = PopupNavigation.Instance;
+            _newCategoryPage = new NewCategoryPopup(this);
+            EditCategoryCommand = new Command<CategoryModel>(ExecuteEditCategoryCommand);
             LoadCategoriesCommand = new Command(ExecuteLoadCategoriesCommand);
             CategoryTappedCommand = new Command<CategoryModel>(OnCategorySelected);
-            AddCategoryCommand = new Command(OnAddCategory);
+            AddCategoryCommand = new Command(OnAddCategoryAsync);
             DeleteCategoryCommand = new Command<CategoryModel>(ExecuteDeleteCategoryCommand);
         }
 
-        private void ExecuteLoadCategoriesCommand()
+        public void ExecuteLoadCategoriesCommand()
         {
             IsBusy = true;
 
@@ -72,13 +84,9 @@ namespace GestTask.ViewModels
             }
         }
 
-        private void OnAddCategory(object obj)
+        private async void OnAddCategoryAsync()
         {
-            CategoryModel newCategory = new CategoryModel();
-            newCategory.Id = 0;
-            newCategory.Name = "new";
-            newCategory.Color = "new";
-            Categories.Add(newCategory);
+            await _popup.PushAsync(_newCategoryPage);
         }
         private async void ExecuteDeleteCategoryCommand(CategoryModel cat)
         {
@@ -87,22 +95,24 @@ namespace GestTask.ViewModels
         }
 
 
-        async void OnCategorySelected(CategoryModel category)
+        private async void OnCategorySelected(CategoryModel category)
         {
             if (category == null)
                 return;
-            
+
+
+            _baseViewModel.FilterCategory = category;
+            _baseViewModel.FilterOn = true;
+            _baseViewModel.ExecuteLoadTasksCommand();
+            await _popup.PopAsync();
         }
-        private async Task ExecuteAddCategory(string name)
+        private async void ExecuteEditCategoryCommand(CategoryModel category)
         {
-            CategoryModel cat = new CategoryModel();
-            cat.Id = 0;
-            cat.Name = name;
-            cat.Color = "blue";
-            if (!string.IsNullOrWhiteSpace(cat.Name))
-            {
-                await App.Db.SaveCategoryAsync(cat);
-            }
+            if (category == null)
+                return;
+
+            _editCategoryPage = new EditCategoryPopup(category, this);
+            await _popup.PushAsync(_editCategoryPage, true);
         }
     }
 }

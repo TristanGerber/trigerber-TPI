@@ -17,6 +17,7 @@ namespace GestTask.ViewModels
         private string description;
         private bool inToDoList;
         private bool active;
+        private TasksViewModel _baseViewModel;
         private IPopupNavigation _popup { get; set; }
         public Command SaveCommand { get; }
         public Command CancelCommand { get; }
@@ -28,9 +29,11 @@ namespace GestTask.ViewModels
         public bool InToDoList { get => inToDoList; set => SetProperty(ref inToDoList, value); }
         public bool Active { get => active; set => SetProperty(ref active, value); }
 
-        public NewTaskViewModel()
+        public NewTaskViewModel(TasksViewModel tasksViewModel)
         {
+            _baseViewModel = tasksViewModel;
             _popup = PopupNavigation.Instance;
+            PassingDate = DateTime.Now;
             SaveCommand = new Command(async () => await ExecuteSaveCommand());
             CancelCommand = new Command(async () => await ExecuteCancelCommand());
             Categories = App.Db.GetCategoriesAsync();
@@ -45,14 +48,23 @@ namespace GestTask.ViewModels
             task.Description = description;
             task.InToDoList = inToDoList;
             task.Active = active;
-            task.FkCategory = selectedCategory.Id;
+            if (selectedCategory != null)
+            {
+                task.FkCategory = selectedCategory.Id;
+            }
 
             if (!string.IsNullOrWhiteSpace(task.Name))
             {
                 await App.Db.SaveTaskAsync(task);
+                _baseViewModel.ExecuteLoadTasksCommand();
+                await _popup.PopAsync();
             }
-            // Navigate backwards
-            await _popup.PopAsync();
+            else
+            {
+                await App.Current.MainPage.DisplayAlert("Erreur", "Veuillez remplir le nom de la tâche", "Retour");
+            }
+
+
         }
 
         private async Task ExecuteCancelCommand()

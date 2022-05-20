@@ -9,6 +9,7 @@
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Catégories" Command="{Binding Source={RelativeSource AncestorType={x:Type local:TasksViewModel}}, Path=FilterCommand}"/>
         <ToolbarItem Text="+" Command="{Binding Source={RelativeSource AncestorType={x:Type local:TasksViewModel}}, Path=AddTaskCommand}"/>
+        <ToolbarItem Text="Retirer les filtres" Command="{Binding Source={RelativeSource AncestorType={x:Type local:TasksViewModel}}, Path=RemoveFiltersCommand}"/>
     </ContentPage.ToolbarItems>
 
     <!--
@@ -35,11 +36,17 @@
                                 </Grid.ColumnDefinitions>
                                 <StackLayout Grid.Column="0">
                                     <Label Text="{Binding Name}"
-                                        LineBreakMode="NoWrap"
-                                        Style="{DynamicResource ListItemTextStyle}"
-                                        FontAttributes="Bold"
-                                        FontSize="20" />
-
+                                           LineBreakMode="NoWrap"
+                                           Style="{DynamicResource ListItemTextStyle}"
+                                           FontAttributes="Bold"
+                                           FontSize="20" />
+                                </StackLayout>
+                                <StackLayout Grid.Column="3">
+                                    <Label Text="{Binding FkCategory}"
+                                           LineBreakMode="NoWrap"
+                                           Style="{DynamicResource ListItemTextStyle}"
+                                           FontAttributes="Bold"
+                                           FontSize="20" />
                                 </StackLayout>
                             </Grid>
                             <StackLayout.GestureRecognizers>

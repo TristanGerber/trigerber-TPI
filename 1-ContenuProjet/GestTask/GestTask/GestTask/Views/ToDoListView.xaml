@@ -2,23 +2,16 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:model="clr-namespace:GestTask.Models"
-             xmlns:local="clr-namespace:GestTask.ViewModels" x:DataType="local:ToDoListViewModel"
+             xmlns:local="clr-namespace:GestTask.ViewModels" x:DataType="local:TasksViewModel"
              x:Class="GestTask.Views.ToDoListView"
-             x:Name="BrowseToDoListView">
-    <ContentPage.Resources>
-        <Style TargetType="BoxView"
-               Class="Category">
-            <Setter Property="BackgroundColor"
-                    Value="#CCCCCC" />
-            <Setter Property="HeightRequest"
-                    Value="1" />
-        </Style>
-    </ContentPage.Resources>
+             x:Name="BrowseToDoListPage">
+
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Catégories" StyleClass="Category"/>
+        <ToolbarItem Text="Catégories" Command="{Binding Source={RelativeSource AncestorType={x:Type local:TasksViewModel}}, Path=FilterCommand}"/>
         <ToolbarItem Text="+" Command="{Binding Source={RelativeSource AncestorType={x:Type local:TasksViewModel}}, Path=AddTaskCommand}"/>
+        <ToolbarItem Text="Retirer les filtres" Command="{Binding Source={RelativeSource AncestorType={x:Type local:TasksViewModel}}, Path=RemoveFiltersCommand}"/>
     </ContentPage.ToolbarItems>
-    
+
     <!--
         Developper : Tristan Gerber
         Place : ETML, N501
@@ -26,8 +19,8 @@
         Last updated : 05.05.2022 */
     -->
 
-    <RefreshView x:DataType="local:ToDoListViewModel" Command="{Binding LoadTasksCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
-        <CollectionView x:Name="ArticlesListView"
+    <RefreshView x:DataType="local:TasksViewModel" Command="{Binding LoadTasksCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+        <CollectionView x:Name="TasksListView"
                 ItemsSource="{Binding Tasks}"
                 SelectionMode="None">
             <CollectionView.ItemTemplate>
@@ -47,12 +40,13 @@
                                         Style="{DynamicResource ListItemTextStyle}"
                                         FontAttributes="Bold"
                                         FontSize="20" />
+
                                 </StackLayout>
                             </Grid>
                             <StackLayout.GestureRecognizers>
                                 <TapGestureRecognizer
                                     NumberOfTapsRequired="1"
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:TasksViewModel}}, Path=TaskTapped}"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:TasksViewModel}}, Path=TaskTappedCommand}"
                                     CommandParameter="{Binding .}">
                                 </TapGestureRecognizer>
                             </StackLayout.GestureRecognizers>

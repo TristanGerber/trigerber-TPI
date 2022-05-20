@@ -1,4 +1,5 @@
 ﻿using GestTask.ViewModels;
+using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace GestTask.Views
@@ -7,9 +8,9 @@ namespace GestTask.Views
     public partial class FilterPopup : Rg.Plugins.Popup.Pages.PopupPage
     {
         FilterViewModel _viewModel;
-        public FilterPopup()
+        public FilterPopup(TasksViewModel tasksViewModel)
         {
-            BindingContext = _viewModel = new FilterViewModel();
+            BindingContext = _viewModel = new FilterViewModel(tasksViewModel);
             InitializeComponent();
 
         }

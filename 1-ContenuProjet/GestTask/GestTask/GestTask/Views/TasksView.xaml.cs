@@ -16,6 +16,7 @@ namespace GestTask.Views
         public TasksView()
         {
             BindingContext = _viewModel = new TasksViewModel();
+            _viewModel.ToDoListOn = false;
             InitializeComponent();
         }
         /// <summary>

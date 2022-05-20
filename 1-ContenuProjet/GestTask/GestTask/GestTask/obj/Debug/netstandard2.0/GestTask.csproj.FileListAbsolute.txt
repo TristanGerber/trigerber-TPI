@@ -18,3 +18,5 @@ D:\DATA\trigerber-TPI\1-ContenuProjet\GestTask\GestTask\GestTask\obj\Debug\netst
 D:\DATA\trigerber-TPI\1-ContenuProjet\GestTask\GestTask\GestTask\obj\Debug\netstandard2.0\GestTask.dll
 D:\DATA\trigerber-TPI\1-ContenuProjet\GestTask\GestTask\GestTask\obj\Debug\netstandard2.0\ref\GestTask.dll
 D:\DATA\trigerber-TPI\1-ContenuProjet\GestTask\GestTask\GestTask\obj\Debug\netstandard2.0\GestTask.pdb
+D:\DATA\trigerber-TPI\1-ContenuProjet\GestTask\GestTask\GestTask\obj\Debug\netstandard2.0\Views\NewCategoryPopup.xaml.g.cs
+D:\DATA\trigerber-TPI\1-ContenuProjet\GestTask\GestTask\GestTask\obj\Debug\netstandard2.0\Views\EditCategoryPopup.xaml.g.cs
