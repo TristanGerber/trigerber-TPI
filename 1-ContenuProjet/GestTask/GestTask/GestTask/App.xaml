@@ -7,12 +7,12 @@
         Developper : Tristan Gerber
         Place : ETML, N501
         Project creation date : 05.05.2022
-        Last updated : 05.05.2022 */
+        Last updated : 25.05.2022 */
     -->
 
     <Application.Resources>
         <ResourceDictionary>
-            <Color x:Key="Primary">#2196F3</Color>
+            <Color x:Key="Primary">DarkBlue</Color>
             <Style TargetType="Button">
                 <Setter Property="TextColor" Value="White"></Setter>
                 <Setter Property="VisualStateManager.VisualStateGroups">

@@ -1,7 +1,7 @@
 ﻿/* Developper : Tristan Gerber
  * Place : ETML, N501
  * Project creation date : 05.05.2022
- * Last updated : 05.05.2022 */
+ * Last updated : 25.05.2022 */
 
 using GestTask.Models;
 using GestTask.Views;
@@ -11,7 +11,6 @@ using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace GestTask.ViewModels
@@ -19,10 +18,10 @@ namespace GestTask.ViewModels
     public class FilterViewModel : BaseViewModel
     {
         private CategoryModel _selectedCategory;
-        private NewCategoryPopup _newCategoryPage;
+        public NewCategoryPopup _newCategoryPage;
         private EditCategoryPopup _editCategoryPage;
         private IPopupNavigation _popup { get; set; }
-        private TasksViewModel _baseViewModel;
+        public TasksViewModel BaseTasksViewModel;
         public ObservableCollection<CategoryModel> Categories { get; }
         public Command LoadCategoriesCommand { get; }
         public Command AddCategoryCommand { get; }
@@ -32,7 +31,7 @@ namespace GestTask.ViewModels
 
         public FilterViewModel(TasksViewModel tasksViewModel)
         {
-            _baseViewModel = tasksViewModel;
+            BaseTasksViewModel = tasksViewModel;
             Title = "Categories";
             Categories = new ObservableCollection<CategoryModel>();
             _popup = PopupNavigation.Instance;
@@ -90,8 +89,11 @@ namespace GestTask.ViewModels
         }
         private async void ExecuteDeleteCategoryCommand(CategoryModel cat)
         {
-            Categories.Remove(cat);
-            await App.Db.DeleteCategoryAsync(cat);
+            if (await App.Current.MainPage.DisplayAlert("Confirmation", "Êtes vous sur de vouloir supprimer ?", "Oui", "Non"))
+            {
+                Categories.Remove(cat);
+                await App.Db.DeleteCategoryAsync(cat);
+            }
         }
 
 
@@ -101,9 +103,9 @@ namespace GestTask.ViewModels
                 return;
 
 
-            _baseViewModel.FilterCategory = category;
-            _baseViewModel.FilterOn = true;
-            _baseViewModel.ExecuteLoadTasksCommand();
+            BaseTasksViewModel.FilterCategory = category;
+            BaseTasksViewModel.FilterOn = true;
+            BaseTasksViewModel.ExecuteLoadTasksCommand();
             await _popup.PopAsync();
         }
         private async void ExecuteEditCategoryCommand(CategoryModel category)

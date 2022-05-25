@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:model="clr-namespace:GestTask.Models"
-             xmlns:local="clr-namespace:GestTask.ViewModels" x:DataType="local:TasksViewModel"
+             xmlns:local="clr-namespace:GestTask.ViewModels"
+             x:DataType="local:TasksViewModel"
              x:Class="GestTask.Views.TasksView"
              x:Name="BrowseTasksPage">
 
@@ -16,7 +17,7 @@
         Developper : Tristan Gerber
         Place : ETML, N501
         Project creation date : 05.05.2022
-        Last updated : 05.05.2022 */
+        Last updated : 25.05.2022 */
     -->
     
     <RefreshView x:DataType="local:TasksViewModel" Command="{Binding LoadTasksCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
@@ -26,7 +27,7 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Frame BorderColor="Black" Padding="1">
-                        <StackLayout x:DataType="model:TaskModel" BackgroundColor="LightGoldenrodYellow" Padding="20,15,10,15">
+                        <StackLayout x:DataType="model:TaskModel" Padding="20,15,10,15" BackgroundColor="{Binding BackColor}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="3*"/>
@@ -36,17 +37,26 @@
                                 </Grid.ColumnDefinitions>
                                 <StackLayout Grid.Column="0">
                                     <Label Text="{Binding Name}"
-                                           LineBreakMode="NoWrap"
+                                           TextColor="Black"
+                                           LineBreakMode="WordWrap"
                                            Style="{DynamicResource ListItemTextStyle}"
                                            FontAttributes="Bold"
-                                           FontSize="20" />
+                                           FontSize="22"
+                                           HorizontalOptions="Start"
+                                           VerticalOptions="Center"/>
                                 </StackLayout>
-                                <StackLayout Grid.Column="3">
-                                    <Label Text="{Binding FkCategory}"
-                                           LineBreakMode="NoWrap"
+                                <StackLayout Grid.Column="3" Grid.ColumnSpan="2" Grid.RowSpan="2">
+                                    <Frame BackgroundColor="PaleGoldenrod"
+                                           BorderColor="Black">
+                                        <Label Text="{Binding CatName}"
+                                           TextColor="Black"
+                                           HorizontalTextAlignment="Center"
+                                           VerticalTextAlignment="Center"
+                                           HorizontalOptions="Center"
+                                           LineBreakMode="WordWrap"
                                            Style="{DynamicResource ListItemTextStyle}"
-                                           FontAttributes="Bold"
-                                           FontSize="20" />
+                                           FontSize="15" />
+                                    </Frame>
                                 </StackLayout>
                             </Grid>
                             <StackLayout.GestureRecognizers>

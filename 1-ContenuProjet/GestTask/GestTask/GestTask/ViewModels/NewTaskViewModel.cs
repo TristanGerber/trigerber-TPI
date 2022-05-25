@@ -1,4 +1,9 @@
-﻿using GestTask.Models;
+﻿/* Developper : Tristan Gerber
+ * Place : ETML, N501
+ * Project creation date : 05.05.2022
+ * Last updated : 25.05.2022 */
+
+using GestTask.Models;
 using Rg.Plugins.Popup.Contracts;
 using Rg.Plugins.Popup.Services;
 using System;
@@ -16,7 +21,7 @@ namespace GestTask.ViewModels
         private CategoryModel selectedCategory;
         private string description;
         private bool inToDoList;
-        private bool active;
+        private bool finished;
         private TasksViewModel _baseViewModel;
         private IPopupNavigation _popup { get; set; }
         public Command SaveCommand { get; }
@@ -27,7 +32,7 @@ namespace GestTask.ViewModels
         public CategoryModel SelectedCategory { get => selectedCategory; set => SetProperty(ref selectedCategory, value); }
         public string Description { get => description; set => SetProperty(ref description, value); }
         public bool InToDoList { get => inToDoList; set => SetProperty(ref inToDoList, value); }
-        public bool Active { get => active; set => SetProperty(ref active, value); }
+        public bool Finished { get => finished; set => SetProperty(ref finished, value); }
 
         public NewTaskViewModel(TasksViewModel tasksViewModel)
         {
@@ -47,7 +52,11 @@ namespace GestTask.ViewModels
             task.Name = name;
             task.Description = description;
             task.InToDoList = inToDoList;
-            task.Active = active;
+            task.Finished = finished;
+            if (task.Finished)
+            {
+                task.InToDoList = false;
+            }
             if (selectedCategory != null)
             {
                 task.FkCategory = selectedCategory.Id;

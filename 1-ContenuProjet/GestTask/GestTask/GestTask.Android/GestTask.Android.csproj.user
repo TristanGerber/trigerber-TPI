@@ -3,5 +3,6 @@
   <PropertyGroup>
     <SelectedDevice>Google Pixel 2</SelectedDevice>
     <ActiveDebugProfile>Google Pixel 2</ActiveDebugProfile>
+    <AndroidDesignerPreferredTheme>MainTheme</AndroidDesignerPreferredTheme>
   </PropertyGroup>
 </Project>

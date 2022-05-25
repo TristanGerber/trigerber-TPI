@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "1weXWHYI1Icm49I84N8cvzJd98ejL3Hc7kziQ3frICLV5D3K3gjLE08z9A3ALeB5qFiKW9TPLVwrR1qqgk2/cQ==",
+  "dgSpecHash": "DaauNJJzFkVrzk1G0Svoh6q+j8j4lUsIolZ9qbJNqUDio1gm5lCwcm4i9AgYJ6+qR3RpbwOODnaCObGhFnIHYg==",
   "success": true,
   "projectFilePath": "D:\\DATA\\trigerber-TPI\\1-ContenuProjet\\GestTask\\GestTask\\GestTask\\GestTask.csproj",
   "expectedPackageFiles": [
@@ -12,11 +12,6 @@
     "C:\\Users\\trigerber\\.nuget\\packages\\sqlitepclraw.core\\2.0.4\\sqlitepclraw.core.2.0.4.nupkg.sha512",
     "C:\\Users\\trigerber\\.nuget\\packages\\sqlitepclraw.lib.e_sqlite3\\2.0.4\\sqlitepclraw.lib.e_sqlite3.2.0.4.nupkg.sha512",
     "C:\\Users\\trigerber\\.nuget\\packages\\sqlitepclraw.provider.e_sqlite3\\2.0.4\\sqlitepclraw.provider.e_sqlite3.2.0.4.nupkg.sha512",
-    "C:\\Users\\trigerber\\.nuget\\packages\\syncfusion.licensing\\20.1.0.56\\syncfusion.licensing.20.1.0.56.nupkg.sha512",
-    "C:\\Users\\trigerber\\.nuget\\packages\\syncfusion.xamarin.core\\20.1.0.56\\syncfusion.xamarin.core.20.1.0.56.nupkg.sha512",
-    "C:\\Users\\trigerber\\.nuget\\packages\\syncfusion.xamarin.datasource\\20.1.0.56\\syncfusion.xamarin.datasource.20.1.0.56.nupkg.sha512",
-    "C:\\Users\\trigerber\\.nuget\\packages\\syncfusion.xamarin.gridcommon\\20.1.0.56\\syncfusion.xamarin.gridcommon.20.1.0.56.nupkg.sha512",
-    "C:\\Users\\trigerber\\.nuget\\packages\\syncfusion.xamarin.sflistview\\20.1.0.56\\syncfusion.xamarin.sflistview.20.1.0.56.nupkg.sha512",
     "C:\\Users\\trigerber\\.nuget\\packages\\system.buffers\\4.4.0\\system.buffers.4.4.0.nupkg.sha512",
     "C:\\Users\\trigerber\\.nuget\\packages\\system.memory\\4.5.3\\system.memory.4.5.3.nupkg.sha512",
     "C:\\Users\\trigerber\\.nuget\\packages\\system.numerics.vectors\\4.5.0\\system.numerics.vectors.4.5.0.nupkg.sha512",

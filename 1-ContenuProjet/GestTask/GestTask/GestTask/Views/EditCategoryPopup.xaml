@@ -2,11 +2,18 @@
 <pages:PopupPage
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+    xmlns:local="clr-namespace:GestTask.ViewModels"
     xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
-    x:Class="GestTask.Views.EditCategoryPopup"
-    xmlns:local="clr-namespace:GestTask.ViewModels">
+    xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+    x:Class="GestTask.Views.EditCategoryPopup">
 
+    <!--
+        Developper : Tristan Gerber
+        Place : ETML, N501
+        Project creation date : 05.05.2022
+        Last updated : 25.05.2022 */
+    -->
+    
     <!--You can set an animation in the xaml file or in the csharp code behind-->
     <pages:PopupPage.Animation>
         <animations:ScaleAnimation

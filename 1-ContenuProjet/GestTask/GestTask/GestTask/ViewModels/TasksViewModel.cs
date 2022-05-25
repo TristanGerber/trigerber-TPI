@@ -1,7 +1,7 @@
 ﻿/* Developper : Tristan Gerber
  * Place : ETML, N501
  * Project creation date : 05.05.2022
- * Last updated : 05.05.2022 */
+ * Last updated : 25.05.2022 */
 
 using GestTask.Models;
 using GestTask.Views;
@@ -42,9 +42,7 @@ namespace GestTask.ViewModels
             AddTaskCommand = new Command(ExecuteAddTaskCommand);
             FilterCommand = new Command(ExecuteFilterCommand);
             RemoveFiltersCommand = new Command(ExecuteRemoveFiltersCommand);
-
             _popup = PopupNavigation.Instance;
-            _newTaskPage = new NewTaskPopup(this);
         }
 
         public void ExecuteLoadTasksCommand()
@@ -54,7 +52,45 @@ namespace GestTask.ViewModels
             {
                 Tasks.Clear();
                 ObservableCollection<TaskModel> tasks = App.Db.GetTasksAsync(true);
-                tasks = new ObservableCollection<TaskModel>(tasks.OrderByDescending(i => i.PassingDate));
+                foreach (TaskModel task in tasks)
+                {
+                    if (task.PassingDate.Day == DateTime.Now.Day)
+                    {
+                        task.BackColor = "OrangeRed";
+                    }
+                    else if (task.PassingDate < DateTime.Now)
+                    {
+                        task.BackColor = "Red";
+                    }
+                    else if (task.PassingDate < DateTime.Now + new TimeSpan(3, 0, 0, 0))
+                    {
+                        task.BackColor = "Orange";
+                    }
+                    else if (task.PassingDate < DateTime.Now + new TimeSpan(7, 0, 0, 0))
+                    {
+                        task.BackColor = "Goldenrod";
+                    }
+                    else if (task.PassingDate < DateTime.Now + new TimeSpan(30, 0, 0, 0))
+                    {
+                        task.BackColor = "LightGoldenrodYellow";
+                    }
+                    else
+                    {
+                        task.BackColor = "White";
+                    }
+
+                    if (task.Finished)
+                    {
+                        task.PassingDate = DateTime.MaxValue;
+                        task.BackColor = "GreenYellow";
+                    }
+                    CategoryModel cat = App.Db.GetCategoryAsync(task.FkCategory).Result;
+                    if (cat != null)
+                    {
+                        task.CatName = cat.Name;
+                    }
+                }
+                tasks = new ObservableCollection<TaskModel>(tasks.OrderBy(i => i.PassingDate));
                 if (FilterOn)
                 {
                     if (ToDoListOn)
@@ -62,6 +98,16 @@ namespace GestTask.ViewModels
                         foreach (TaskModel task in tasks)
                         {
                             if (task.InToDoList && task.FkCategory == FilterCategory.Id)
+                            {
+                                Tasks.Add(task);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        foreach (TaskModel task in tasks)
+                        {
+                            if (task.FkCategory == FilterCategory.Id)
                             {
                                 Tasks.Add(task);
                             }
@@ -122,6 +168,7 @@ namespace GestTask.ViewModels
 
         private async void ExecuteAddTaskCommand(object obj)
         {
+            _newTaskPage = new NewTaskPopup(this);
             await _popup.PushAsync(_newTaskPage, true);
         }
         private async void ExecuteFilterCommand(object obj)

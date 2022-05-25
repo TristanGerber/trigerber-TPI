@@ -46,10 +46,6 @@
               "target": "Package",
               "version": "[2.1.0, )"
             },
-            "Syncfusion.Xamarin.SfListView": {
-              "target": "Package",
-              "version": "[20.1.0.56, )"
-            },
             "Xamarin.Essentials": {
               "target": "Package",
               "version": "[1.6.1, )"
@@ -116,10 +112,6 @@
             "Rg.Plugins.Popup": {
               "target": "Package",
               "version": "[2.1.0, )"
-            },
-            "Syncfusion.Xamarin.SfListView": {
-              "target": "Package",
-              "version": "[20.1.0.56, )"
             },
             "Xamarin.Essentials": {
               "target": "Package",

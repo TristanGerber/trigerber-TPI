@@ -1,12 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<pages:PopupPage 
+<pages:PopupPage
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+    xmlns:local="clr-namespace:GestTask.ViewModels"
     xmlns:animations="clr-namespace:Rg.Plugins.Popup.Animations;assembly=Rg.Plugins.Popup"
-    x:Class="GestTask.Views.TaskMenuPopup"
-    xmlns:local="clr-namespace:GestTask.ViewModels">
-    <!--You can set an animation in the xaml file or in the csharp code behind-->
+    xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+    x:Class="GestTask.Views.TaskMenuPopup">
+
+    <!--
+        Developper : Tristan Gerber
+        Place : ETML, N501
+        Project creation date : 05.05.2022
+        Last updated : 25.05.2022 */
+    -->
+
     <pages:PopupPage.Animation>
         <animations:ScaleAnimation 
             PositionIn="Center"
@@ -32,19 +39,36 @@
                          VerticalOptions="Center"
                          HorizontalOptions="Center"
                          Padding="80, 20, 80, 20">
-                <Entry Text="{Binding Name}" Placeholder="Nom de la tâche"/>
-                <Entry Text="{Binding Description}" Placeholder="Description"/>
-                <Label Text="Active"/>
-                <CheckBox x:Name="ActiveCheckBox" IsChecked="{Binding Active}"/>
-                <Label Text="Date d'échéance"/>
-                <DatePicker Date="{Binding PassingDate}"/>
-                <Label Text="Dans la ToDoList"/>
-                <CheckBox IsChecked="{Binding InToDoList}"/>
-                <Label Text="Catégorie"/>
-                <Picker Title="Catégorie" ItemsSource="{Binding Categories}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding SelectedCategory}"/>
-                <Button Text="Sauvegarder" Command="{Binding Source={RelativeSource AncestorType={x:Type local:TaskMenuViewModel}}, Path=SaveCommand}"/>
-                <Button Text="Supprimer" Command="{Binding Source={RelativeSource AncestorType={x:Type local:TaskMenuViewModel}}, Path=DeleteCommand}"/>
-                <Button Text="Annuler" Command="{Binding Source={RelativeSource AncestorType={x:Type local:TaskMenuViewModel}}, Path=CancelCommand}"/>
+                <Entry Text="{Binding Name}" Placeholder="Nom de la tâche" FontSize="Medium"/>
+                <Editor Text="{Binding Description}" Placeholder="Description" HeightRequest="100"/>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Text="Terminée" VerticalOptions="Center" Grid.Row="0" Grid.ColumnSpan="3"/>
+                    <CheckBox x:Name="ActiveCheckBox" IsChecked="{Binding Finished}" Grid.Row="0" Grid.Column="3"/>
+                    <Label Text="Date d'échéance" Grid.Row="1" Grid.ColumnSpan="4"/>
+                    <DatePicker Date="{Binding PassingDate}" Grid.Row="2" Grid.ColumnSpan="4" FontSize="Micro"/>
+                    <Label Text="Dans la ToDoList" Grid.Row="3" Grid.ColumnSpan="3"/>
+                    <CheckBox IsChecked="{Binding InToDoList}" Grid.Row="3" Grid.ColumnSpan="1" Grid.Column="3"/>
+                    <Picker Grid.Row="4" Grid.ColumnSpan="4" Title="Catégorie" FontSize="Small" ItemsSource="{Binding Categories}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding SelectedCategory}"/>
+                    <Button Grid.Row="5" Grid.ColumnSpan="4" Text="Sauvegarder" Command="{Binding Source={RelativeSource AncestorType={x:Type local:TaskMenuViewModel}}, Path=SaveCommand}"/>
+                    <Button Grid.Row="6" Grid.ColumnSpan="4" Text="Supprimer" Command="{Binding Source={RelativeSource AncestorType={x:Type local:TaskMenuViewModel}}, Path=DeleteCommand}"/>
+                    <Button Grid.Row="7" Grid.ColumnSpan="4" Text="Annuler" Command="{Binding Source={RelativeSource AncestorType={x:Type local:TaskMenuViewModel}}, Path=CancelCommand}"/>
+                </Grid>
             </StackLayout>
         </Frame>
     </Frame>
