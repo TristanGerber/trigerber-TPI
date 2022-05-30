@@ -40,6 +40,7 @@ namespace GestTask.ViewModels
             }
             // Navigate backwards
             _baseModel.ExecuteLoadCategoriesCommand();
+            _baseModel.BaseTasksViewModel.ExecuteLoadTasksCommand();
             await _popup.PopAsync();
         }
 

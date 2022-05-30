@@ -10,7 +10,7 @@
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Catégories" Command="{Binding Source={RelativeSource AncestorType={x:Type local:TasksViewModel}}, Path=FilterCommand}"/>
         <ToolbarItem Text="+" Command="{Binding Source={RelativeSource AncestorType={x:Type local:TasksViewModel}}, Path=AddTaskCommand}"/>
-        <ToolbarItem Text="Retirer les filtres" Command="{Binding Source={RelativeSource AncestorType={x:Type local:TasksViewModel}}, Path=RemoveFiltersCommand}"/>
+        <ToolbarItem Text="Tout afficher" Command="{Binding Source={RelativeSource AncestorType={x:Type local:TasksViewModel}}, Path=RemoveFiltersCommand}"/>
     </ContentPage.ToolbarItems>
 
     <!--
