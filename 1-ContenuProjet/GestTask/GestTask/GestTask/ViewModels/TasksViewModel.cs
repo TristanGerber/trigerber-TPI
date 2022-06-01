@@ -1,7 +1,7 @@
 ﻿/* Developper : Tristan Gerber
  * Place : ETML, N501
  * Project creation date : 05.05.2022
- * Last updated : 25.05.2022 */
+ * Last updated : 01.06.2022 */
 
 using GestTask.Models;
 using GestTask.Views;
@@ -16,6 +16,9 @@ using Xamarin.Forms;
 
 namespace GestTask.ViewModels
 {
+    /// <summary>
+    /// ViewModel of the TasksView and ToDoList Pages
+    /// </summary>
     public class TasksViewModel : BaseViewModel
     {
         private TaskModel _selectedTask;
@@ -33,6 +36,11 @@ namespace GestTask.ViewModels
         public Command FilterCommand { get; }
         public Command<TaskModel> TaskTappedCommand { get; }
 
+        /// <summary>
+        /// Constructor, get values and set commands
+        /// </summary>
+        /// <param name="category"></param>
+        /// <param name="filterViewModel"></param>
         public TasksViewModel()
         {
             Title = "Tâches";
@@ -45,6 +53,9 @@ namespace GestTask.ViewModels
             _popup = PopupNavigation.Instance;
         }
 
+        /// <summary>
+        /// Load all tasks from database in the tasks list
+        /// </summary>
         public void ExecuteLoadTasksCommand()
         {
             IsBusy = true;
@@ -52,6 +63,8 @@ namespace GestTask.ViewModels
             {
                 Tasks.Clear();
                 ObservableCollection<TaskModel> tasks = App.Db.GetTasksAsync(true);
+
+                // Get the right color according to the passing date
                 foreach (TaskModel task in tasks)
                 {
                     if (task.PassingDate.Day == DateTime.Now.Day)
@@ -90,6 +103,8 @@ namespace GestTask.ViewModels
                         task.CatName = cat.Name;
                     }
                 }
+
+                // Add tasks in the list according to current filters / ToDoList
                 tasks = new ObservableCollection<TaskModel>(tasks.OrderBy(i => i.PassingDate));
                 if (FilterOn)
                 {
@@ -145,15 +160,13 @@ namespace GestTask.ViewModels
             }
         }
 
+        /// <summary>
+        /// On appearing, set useful values for the program
+        /// </summary>
         public void OnAppearing()
         {
             IsBusy = true;
             SelectedTask = null;
-        }
-
-        private void Popup_Popped(object sender, PopupNavigationEventArgs e)
-        {
-            throw new NotImplementedException();
         }
 
         public TaskModel SelectedTask
@@ -166,17 +179,30 @@ namespace GestTask.ViewModels
             }
         }
 
+        /// <summary>
+        /// Open the NewTask Popup
+        /// </summary>
+        /// <param name="obj"></param>
         private async void ExecuteAddTaskCommand(object obj)
         {
             _newTaskPage = new NewTaskPopup(this);
             await _popup.PushAsync(_newTaskPage, true);
         }
+
+        /// <summary>
+        /// Open the Filter Popup
+        /// </summary>
+        /// <param name="obj"></param>
         private async void ExecuteFilterCommand(object obj)
         {
             _filterPage = new FilterPopup(this);
             await _popup.PushAsync(_filterPage, true);
         }
 
+        /// <summary>
+        /// Open the TaskMenu Popup
+        /// </summary>
+        /// <param name="task"></param>
         private async void OnTaskSelected(TaskModel task)
         {
             if (task == null)
@@ -187,6 +213,11 @@ namespace GestTask.ViewModels
             _modalPage = new TaskMenuPopup(task, this);
             await _popup.PushAsync(_modalPage, true);
         }
+
+        /// <summary>
+        /// Remove filter and load again
+        /// </summary>
+        /// <param name="obj"></param>
         private void ExecuteRemoveFiltersCommand(object obj)
         {
             FilterOn = false;

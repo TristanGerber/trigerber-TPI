@@ -14,7 +14,7 @@
         Last updated : 25.05.2022 */
     -->
     
-    <!--You can set an animation in the xaml file or in the csharp code behind-->
+    <!--Setting the animation properties of the popup-->
     <pages:PopupPage.Animation>
         <animations:ScaleAnimation
             PositionIn="Center"
@@ -27,7 +27,7 @@
             EasingOut="SinIn"
             HasBackgroundAnimation="True"/>
     </pages:PopupPage.Animation>
-    <!--You can use any elements here which are extended from Xamarin.Forms.View-->
+    <!--Setting the frame of the popup-->
     <Frame x:Name="PopupListFrame" Margin="20,20,20,20" Padding="5,5,5,5" HasShadow="False" HorizontalOptions="CenterAndExpand" VerticalOptions="FillAndExpand" CornerRadius="10" BorderColor="{StaticResource Primary}" BackgroundColor="{StaticResource Primary}" >
         <Frame 
         HorizontalOptions="CenterAndExpand" 
@@ -36,6 +36,7 @@
         HasShadow="false"
         Margin="0"
         Padding="10,10,10,10">
+            <!--Load a category from the EditCategoryViewModel-->
             <StackLayout x:DataType="local:EditCategoryViewModel"
                          VerticalOptions="Center"
                          HorizontalOptions="Center"

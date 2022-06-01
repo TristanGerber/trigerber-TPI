@@ -1,7 +1,7 @@
 ﻿/* Developper : Tristan Gerber
  * Place : ETML, N501
  * Project creation date : 05.05.2022
- * Last updated : 25.05.2022 */
+ * Last updated : 01.06.2022 */
 
 using GestTask.Models;
 using Rg.Plugins.Popup.Contracts;
@@ -13,6 +13,9 @@ using Xamarin.Forms;
 
 namespace GestTask.ViewModels
 {
+    /// <summary>
+    /// ViewModel of the TaskMenu Popup
+    /// </summary>
     public class TaskMenuViewModel : TasksViewModel
     {
         private DateTime passingDate;
@@ -37,6 +40,11 @@ namespace GestTask.ViewModels
         public Command DeleteCommand { get; }
         public Command CancelCommand { get; }
 
+        /// <summary>
+        /// Constructor, get values and set commands
+        /// </summary>
+        /// <param name="category"></param>
+        /// <param name="filterViewModel"></param>
         public TaskMenuViewModel(TaskModel task, TasksViewModel tasksViewModel)
         {
             _baseViewModel = tasksViewModel;
@@ -55,18 +63,26 @@ namespace GestTask.ViewModels
             CancelCommand = new Command(async () => await ExecuteCancelCommand());
         }
 
+        /// <summary>
+        /// Delete the selected task
+        /// </summary>
+        /// <returns></returns>
         private async Task ExecuteDeleteCommand()
         {
             if (await App.Current.MainPage.DisplayAlert("Confirmation", "Êtes vous sur de vouloir supprimer ?", "Oui", "Non"))
             {
                 await App.Db.DeleteTaskAsync(_task);
 
-                // Navigate backwards
+                // Navigate backwards and reload the list
                 _baseViewModel.ExecuteLoadTasksCommand();
                 await _popup.PopAsync();
             }
         }
 
+        /// <summary>
+        /// Save the modifications to the selected task
+        /// </summary>
+        /// <returns></returns>
         private async Task ExecuteSaveCommand()
         {
             _task.PassingDate = passingDate.Date;
@@ -92,16 +108,24 @@ namespace GestTask.ViewModels
                 await App.Current.MainPage.DisplayAlert("Erreur", "Veuillez remplir le nom de la tâche", "Retour");
             }
 
-            // Navigate backwards
+            // Navigate backwards and reload the list
             _baseViewModel.ExecuteLoadTasksCommand();
             await _popup.PopAsync();
         }
 
+        /// <summary>
+        /// Go back to the main page
+        /// </summary>
+        /// <returns></returns>
         private async Task ExecuteCancelCommand()
         {
             // Navigate backwards
             await _popup.PopAsync();
         }
+
+        /// <summary>
+        /// On appearing, set useful values for the program
+        /// </summary>
         public void OnAppearing()
         {
             IsBusy = true;

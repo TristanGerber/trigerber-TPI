@@ -1,7 +1,7 @@
 ﻿/* Developper : Tristan Gerber
  * Place : ETML, N501
  * Project creation date : 05.05.2022
- * Last updated : 25.05.2022 */
+ * Last updated : 01.06.2022 */
 
 using GestTask.Models;
 using Rg.Plugins.Popup.Contracts;
@@ -13,6 +13,9 @@ using Xamarin.Forms;
 
 namespace GestTask.ViewModels
 {
+    /// <summary>
+    /// ViewModel of the NewTask Popup
+    /// </summary>
     public class NewTaskViewModel : BaseViewModel
     {
         private DateTime passingDate;
@@ -34,6 +37,11 @@ namespace GestTask.ViewModels
         public bool InToDoList { get => inToDoList; set => SetProperty(ref inToDoList, value); }
         public bool Finished { get => finished; set => SetProperty(ref finished, value); }
 
+        /// <summary>
+        /// Constructor, get values and set commands
+        /// </summary>
+        /// <param name="category"></param>
+        /// <param name="filterViewModel"></param>
         public NewTaskViewModel(TasksViewModel tasksViewModel)
         {
             _baseViewModel = tasksViewModel;
@@ -44,8 +52,13 @@ namespace GestTask.ViewModels
             Categories = App.Db.GetCategoriesAsync();
         }
 
+        /// <summary>
+        /// Get the values for the new task from the View and add it to database
+        /// </summary>
+        /// <returns></returns>
         private async Task ExecuteSaveCommand()
         {
+            // Adding values
             TaskModel task = new TaskModel();
             task.Id = 0;
             task.PassingDate = passingDate.Date;
@@ -53,6 +66,8 @@ namespace GestTask.ViewModels
             task.Description = description;
             task.InToDoList = inToDoList;
             task.Finished = finished;
+
+            // If finished, cannot be in ToDoList
             if (task.Finished)
             {
                 task.InToDoList = false;
@@ -62,9 +77,12 @@ namespace GestTask.ViewModels
                 task.FkCategory = selectedCategory.Id;
             }
 
+            // Adding to database
             if (!string.IsNullOrWhiteSpace(task.Name))
             {
                 await App.Db.SaveTaskAsync(task);
+
+                // Navigate backwards and reload the list
                 _baseViewModel.ExecuteLoadTasksCommand();
                 await _popup.PopAsync();
             }
@@ -76,11 +94,19 @@ namespace GestTask.ViewModels
 
         }
 
+        /// <summary>
+        /// Go back to the main page
+        /// </summary>
+        /// <returns></returns>
         private async Task ExecuteCancelCommand()
         {
             // Navigate backwards
             await _popup.PopAsync();
         }
+
+        /// <summary>
+        /// On appearing, set useful values for the program
+        /// </summary>
         public void OnAppearing()
         {
             IsBusy = true;

@@ -15,8 +15,8 @@
         Project creation date : 05.05.2022
         Last updated : 25.05.2022 */
     -->
-    
-    <!--You can set an animation in the xaml file or in the csharp code behind-->
+
+    <!--Setting the animation properties of the popup-->
     <pages:PopupPage.Animation>
         <animations:ScaleAnimation 
             PositionIn="Center"
@@ -30,6 +30,7 @@
             HasBackgroundAnimation="True"/>
     </pages:PopupPage.Animation>
     <pages:PopupPage.Content>
+        <!--Setting the frame of the popup-->
         <Frame x:Name="PopupListFrame" Margin="20,20,20,20" Padding="5,5,5,5" HasShadow="False" HorizontalOptions="CenterAndExpand" VerticalOptions="FillAndExpand" CornerRadius="10" BorderColor="{StaticResource Primary}" BackgroundColor="{StaticResource Primary}" >
             <Frame HorizontalOptions="CenterAndExpand"
                    VerticalOptions="FillAndExpand"
@@ -37,6 +38,7 @@
                    HasShadow="false"
                    Margin="0"
                    Padding="10,10,10,10">
+                <!--Load the list of categories from the FilterViewModel-->
                 <RefreshView Command="{Binding LoadCategoriesCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
                     <CollectionView x:Name="CategoriesListView" ItemsSource="{Binding Categories}" SelectionMode="None">
                         <CollectionView.Header>
